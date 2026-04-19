@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const navItems = [
   { label: "Giải pháp", href: "#solutions" },
@@ -14,23 +15,19 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-primary/95 backdrop-blur-md">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5">
-              <div className="h-8 w-8 rounded-[0.375rem] bg-secondary flex items-center justify-center">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#041534" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                  <path d="M2 17l10 5 10-5" />
-                  <path d="M2 12l10 5 10-5" />
-                </svg>
-              </div>
-              <span className="font-display text-xl font-bold text-on-primary tracking-tight">
-                AI MIND
-              </span>
-            </div>
+            <Image
+              src="/logo-ai-mind.png"
+              alt="AI Mind"
+              width={140}
+              height={44}
+              priority
+              className="h-10 w-auto"
+            />
           </Link>
 
           {/* Desktop Nav */}
@@ -39,7 +36,7 @@ export default function Header() {
               <a
                 key={item.href}
                 href={item.href}
-                className="text-sm font-medium text-white/70 hover:text-white transition-colors duration-200"
+                className="text-sm font-medium text-slate-600 hover:text-primary transition-colors duration-200"
               >
                 {item.label}
               </a>
@@ -50,7 +47,7 @@ export default function Header() {
           <div className="hidden md:flex items-center">
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 rounded-[0.375rem] bg-secondary px-5 py-2.5 text-sm font-semibold text-on-secondary hover:scale-[1.02] transition-transform duration-200"
+              className="inline-flex items-center gap-2 rounded-[0.375rem] bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:scale-[1.02] transition-transform duration-200"
             >
               Tư vấn ngay
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -62,7 +59,7 @@ export default function Header() {
           {/* Mobile menu button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-2 text-white/80"
+            className="md:hidden p-2 text-slate-700"
             aria-label="Menu"
           >
             {mobileOpen ? (
@@ -80,14 +77,14 @@ export default function Header() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-primary border-t border-white/10">
+        <div className="md:hidden bg-white border-t border-slate-100">
           <div className="px-4 py-4 space-y-3">
             {navItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
-                className="block text-sm font-medium text-white/70 hover:text-white py-2"
+                className="block text-sm font-medium text-slate-600 hover:text-primary py-2"
               >
                 {item.label}
               </a>
@@ -95,7 +92,7 @@ export default function Header() {
             <a
               href="#contact"
               onClick={() => setMobileOpen(false)}
-              className="block w-full text-center rounded-[0.375rem] bg-secondary px-5 py-2.5 text-sm font-semibold text-on-secondary mt-3"
+              className="block w-full text-center rounded-[0.375rem] bg-primary px-5 py-2.5 text-sm font-semibold text-white mt-3"
             >
               Tư vấn ngay
             </a>

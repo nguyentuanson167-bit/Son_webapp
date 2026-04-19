@@ -8,14 +8,14 @@ export default function ExpertMetrics() {
             <div className="flex items-start gap-6 mb-6">
               {/* Avatar placeholder */}
               <div className="shrink-0 h-20 w-20 rounded-full bg-primary/10 flex items-center justify-center">
-                <span className="font-display text-2xl font-bold text-primary">MN</span>
+                <span className="font-display text-2xl font-bold text-primary">SN</span>
               </div>
               <div>
                 <div className="text-xs font-semibold text-secondary uppercase tracking-wider mb-1">
                   Founder & Chief Expert
                 </div>
                 <h3 className="font-display text-xl font-bold text-on-surface">
-                  Dr. Minh Nguyen
+                  Son Nguyen
                 </h3>
                 <p className="text-sm text-on-surface-variant mt-1">
                   Founder & Chief Expert GMP/ISO
@@ -29,7 +29,7 @@ export default function ExpertMetrics() {
 
             <div className="grid grid-cols-2 gap-6">
               <div>
-                <div className="font-display text-3xl font-bold text-primary">XX+</div>
+                <div className="font-display text-3xl font-bold text-primary">10+</div>
                 <div className="text-xs text-on-surface-variant mt-1">Năm kinh nghiệm</div>
               </div>
               <div>

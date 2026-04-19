@@ -41,9 +41,11 @@
 
   --color-secondary: var(--secondary);
   --color-secondary-container: var(--secondary-container);
+  --color-secondary-dim: var(--secondary-dim);
   --color-on-secondary: var(--on-secondary);
 
   --color-tertiary: var(--tertiary);
+  --color-tertiary-dim: var(--tertiary-dim);
 
   --color-surface: var(--surface);
   --color-surface-low: var(--surface-container-low);
@@ -78,6 +80,14 @@
 /* Hero gradient */
 .hero-gradient {
   background: radial-gradient(ellipse at 30% 50%, #1b2a4a 0%, #041534 70%);
+}
+
+/* Hero gradient - white tone */
+.hero-gradient-light {
+  background:
+    radial-gradient(ellipse at 85% 15%, rgba(80, 217, 254, 0.10) 0%, transparent 55%),
+    radial-gradient(ellipse at 15% 85%, rgba(78, 222, 163, 0.08) 0%, transparent 50%),
+    linear-gradient(180deg, #ffffff 0%, #f7f9fb 100%);
 }
 
 /* CTA gradient */

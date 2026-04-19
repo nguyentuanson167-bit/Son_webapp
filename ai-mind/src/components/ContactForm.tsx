@@ -125,7 +125,7 @@ export default function ContactForm() {
 
   if (submitted) {
     return (
-      <section className="py-20 sm:py-28 bg-surface" id="contact-form">
+      <section className="py-20 sm:py-28 bg-surface" id="contact">
         <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
           <div className="rounded-[0.5rem] bg-surface-lowest p-10 sm:p-14 shadow-ghost text-center">
             <div className="mx-auto mb-6 h-16 w-16 rounded-full bg-tertiary/10 flex items-center justify-center">
@@ -156,7 +156,7 @@ export default function ContactForm() {
   }
 
   return (
-    <section className="py-20 sm:py-28 bg-surface" id="contact-form">
+    <section className="py-20 sm:py-28 bg-surface" id="contact">
       <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center mb-10">
