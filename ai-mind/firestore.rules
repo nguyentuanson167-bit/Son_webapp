@@ -1,0 +1,159 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ─── Helper functions ───
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function hasRole(role) {
+      return isAuthenticated()
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == role;
+    }
+
+    function isAdmin() {
+      return hasRole('admin');
+    }
+
+    function isEditor() {
+      return hasRole('editor') || isAdmin();
+    }
+
+    function isConsultant() {
+      return hasRole('consultant') || isAdmin();
+    }
+
+    function isSales() {
+      return hasRole('sales') || isAdmin();
+    }
+
+    function isStaff() {
+      return isAdmin() || isEditor() || isConsultant() || isSales();
+    }
+
+    // ─── Consultation Requests (Leads) ───
+    // Public: create with validation
+    // Staff: read, update
+
+    match /consultation_requests/{docId} {
+      allow create: if
+        request.resource.data.contact_name is string &&
+        request.resource.data.email is string &&
+        request.resource.data.company_name is string &&
+        request.resource.data.phone is string &&
+        request.resource.data.service_interest is list &&
+        request.resource.data.status == 'new';
+
+      allow read: if isStaff();
+      allow update: if isConsultant() || isSales();
+      allow delete: if isAdmin();
+    }
+
+    // ─── Assessment Bookings ───
+    // Staff only: full CRUD
+
+    match /assessment_bookings/{docId} {
+      allow read: if isStaff();
+      allow create: if isConsultant() || isSales();
+      allow update: if isConsultant() || isSales();
+      allow delete: if isAdmin();
+    }
+
+    // ─── Services ───
+    // Public: read if published
+    // Editor/Admin: write
+
+    match /services/{docId} {
+      allow read: if resource.data.is_published == true || isEditor();
+      allow create, update: if isEditor();
+      allow delete: if isAdmin();
+    }
+
+    // ─── Training Programs ───
+
+    match /training_programs/{docId} {
+      allow read: if resource.data.is_published == true || isEditor();
+      allow create, update: if isEditor();
+      allow delete: if isAdmin();
+    }
+
+    // ─── Standards Pages ───
+
+    match /standards_pages/{docId} {
+      allow read: if resource.data.publish_status == 'published' || isEditor();
+      allow create, update: if isEditor();
+      allow delete: if isAdmin();
+    }
+
+    // ─── Projects / Case Studies ───
+
+    match /projects/{docId} {
+      allow read: if resource.data.publish_status == 'published' || isEditor();
+      allow create, update: if isEditor();
+      allow delete: if isAdmin();
+    }
+
+    // ─── Blog Posts ───
+
+    match /blog_posts/{docId} {
+      allow read: if resource.data.publish_status == 'published' || isEditor();
+      allow create, update: if isEditor();
+      allow delete: if isAdmin();
+    }
+
+    // ─── Blog Categories ───
+
+    match /blog_categories/{docId} {
+      allow read: if resource.data.is_active == true || isEditor();
+      allow create, update: if isEditor();
+      allow delete: if isAdmin();
+    }
+
+    // ─── Pages (Visual editing) ───
+
+    match /pages/{docId} {
+      allow read: if true;
+      allow write: if isEditor();
+    }
+
+    // ─── FAQ Items ───
+
+    match /faq_items/{docId} {
+      allow read: if resource.data.is_active == true || isEditor();
+      allow create, update: if isEditor();
+      allow delete: if isAdmin();
+    }
+
+    // ─── SEO Configs ───
+
+    match /seo_configs/{docId} {
+      allow read: if true;
+      allow write: if isEditor();
+    }
+
+    // ─── Knowledge Base (AI pre-sales) ───
+
+    match /knowledge_base/{docId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    // ─── Users (Role management) ───
+
+    match /users/{userId} {
+      allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      allow write: if isAdmin();
+    }
+
+    // ─── Audit Log ───
+
+    match /audit_log/{docId} {
+      allow read: if isAdmin();
+      allow create: if isAuthenticated();
+      allow update, delete: if false;
+    }
+  }
+}

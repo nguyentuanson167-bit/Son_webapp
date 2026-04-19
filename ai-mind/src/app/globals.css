@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+:root {
+  /* Primary - Deep Navy */
+  --primary: #041534;
+  --primary-container: #1b2a4a;
+  --primary-light: #0a2351;
+  --on-primary: #ffffff;
+
+  /* Secondary - Living Cyan */
+  --secondary: #50d9fe;
+  --secondary-container: #50d9fe;
+  --secondary-dim: #3bc4e8;
+  --on-secondary: #041534;
+
+  /* Tertiary - Success Green */
+  --tertiary: #4edea3;
+  --tertiary-dim: #3cc88e;
+
+  /* Surfaces */
+  --surface: #f7f9fb;
+  --surface-container-low: #f2f4f6;
+  --surface-container-lowest: #ffffff;
+  --surface-container-high: #e6e8ea;
+  --on-surface: #191c1e;
+  --on-surface-variant: #42474e;
+
+  /* Outline */
+  --outline: #73777f;
+  --outline-variant: #c3c6cf;
+
+  /* Surface tint for glass effects */
+  --surface-tint: rgba(4, 21, 52, 0.1);
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-container: var(--primary-container);
+  --color-primary-light: var(--primary-light);
+  --color-on-primary: var(--on-primary);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-container: var(--secondary-container);
+  --color-on-secondary: var(--on-secondary);
+
+  --color-tertiary: var(--tertiary);
+
+  --color-surface: var(--surface);
+  --color-surface-low: var(--surface-container-low);
+  --color-surface-lowest: var(--surface-container-lowest);
+  --color-surface-high: var(--surface-container-high);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-jakarta);
+}
+
+/* Ghost Shadow utility */
+.shadow-ghost {
+  box-shadow: 0px 20px 40px rgba(25, 28, 30, 0.06);
+}
+
+.shadow-ghost-lg {
+  box-shadow: 0px 24px 48px rgba(25, 28, 30, 0.08);
+}
+
+/* Glass effect */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* Hero gradient */
+.hero-gradient {
+  background: radial-gradient(ellipse at 30% 50%, #1b2a4a 0%, #041534 70%);
+}
+
+/* CTA gradient */
+.cta-gradient {
+  background: radial-gradient(ellipse at 60% 50%, #1b2a4a 0%, #041534 80%);
+}
+
+/* Smooth transitions */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  background: var(--surface);
+  color: var(--on-surface);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface-container-low);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--outline-variant);
+  border-radius: 3px;
+}
+
+/* FAQ animation */
+details[open] summary ~ * {
+  animation: sweep 0.3s ease-in-out;
+}
+@keyframes sweep {
+  0% { opacity: 0; transform: translateY(-8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Metric counter animation */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-count {
+  animation: countUp 0.6s ease-out forwards;
+}

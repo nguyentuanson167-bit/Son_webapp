@@ -1,0 +1,16 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Public read for published media
+    match /public/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Admin-only uploads
+    match /admin/{allPaths=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
