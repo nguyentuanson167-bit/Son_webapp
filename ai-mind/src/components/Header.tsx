@@ -19,7 +19,7 @@ export default function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2.5">
             <Image
               src="/logo-ai-mind.png"
               alt="AI Mind"
@@ -28,6 +28,9 @@ export default function Header() {
               priority
               className="h-10 w-auto"
             />
+            <span className="font-display text-xl font-extrabold text-primary tracking-tight">
+              AI MIND
+            </span>
           </Link>
 
           {/* Desktop Nav */}

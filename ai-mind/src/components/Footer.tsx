@@ -9,15 +9,15 @@ const footerLinks = {
     { label: "Tài liệu", href: "#" },
   ],
   "Công ty": [
-    { label: "Về chúng tôi", href: "#" },
-    { label: "Giải pháp", href: "#solutions" },
+    { label: "Về chúng tôi", href: "/ve-chung-toi" },
+    { label: "Giải pháp", href: "/giai-phap" },
     { label: "Case Studies", href: "#" },
-    { label: "Blog", href: "#" },
+    { label: "Blog", href: "/blog" },
   ],
   "Pháp lý": [
-    { label: "Chính sách bảo mật", href: "#" },
-    { label: "Điều khoản dịch vụ", href: "#" },
-    { label: "Bảo mật dữ liệu", href: "#" },
+    { label: "Chính sách bảo mật", href: "/chinh-sach-bao-mat" },
+    { label: "Điều khoản dịch vụ", href: "/dieu-khoan-dich-vu" },
+    { label: "Bảo mật dữ liệu", href: "/bao-mat-du-lieu" },
   ],
 };
 
@@ -36,6 +36,9 @@ export default function Footer() {
                 height={40}
                 className="h-10 w-auto"
               />
+              <span className="font-display text-lg font-extrabold text-white tracking-tight">
+                AI MIND
+              </span>
             </Link>
             <p className="text-sm text-white/40 leading-relaxed max-w-xs mb-6">
               Cung cấp giải pháp tư vấn GMP/ISO và xây dựng hệ thống AI cho doanh nghiệp dược phẩm Việt Nam.

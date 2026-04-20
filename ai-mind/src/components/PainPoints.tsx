@@ -19,7 +19,7 @@ const painPoints = [
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
       </svg>
     ),
-    title: "Thanh tra tuân thủ là nỗi lo",
+    title: "Thanh tra GMP, hậu kiểm luôn là nỗi lo",
     description:
       "Áp lực lớn mỗi kỳ thanh tra vì thiếu trạng thái sẵn sàng kiểm tra theo thời gian thực.",
   },

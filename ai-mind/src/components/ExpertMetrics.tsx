@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function ExpertMetrics() {
   return (
     <section className="py-20 sm:py-28 bg-surface" id="about">
@@ -6,9 +8,15 @@ export default function ExpertMetrics() {
           {/* Expert Profile */}
           <div className="rounded-[0.5rem] bg-surface-lowest p-8 lg:p-10 shadow-ghost">
             <div className="flex items-start gap-6 mb-6">
-              {/* Avatar placeholder */}
-              <div className="shrink-0 h-20 w-20 rounded-full bg-primary/10 flex items-center justify-center">
-                <span className="font-display text-2xl font-bold text-primary">SN</span>
+              {/* Avatar */}
+              <div className="shrink-0 h-24 w-24 rounded-full overflow-hidden ring-2 ring-primary/10">
+                <Image
+                  src="/son-nguyen-avatar.jpg"
+                  alt="Son Nguyen - Founder & Chief Expert"
+                  width={96}
+                  height={96}
+                  className="h-full w-full object-cover"
+                />
               </div>
               <div>
                 <div className="text-xs font-semibold text-secondary uppercase tracking-wider mb-1">
@@ -62,7 +70,7 @@ export default function ExpertMetrics() {
                   <span className="font-display text-4xl font-extrabold text-secondary">100%</span>
                 </div>
                 <p className="text-sm text-white/60 leading-relaxed">
-                  Tỷ lệ bàn thủ tục hồ sơ và vượt qua xác nhận kỹ thuật lần đầu
+                  Các luồng công việc GMP được tự động hóa và số hóa theo chuẩn
                 </p>
               </div>
 

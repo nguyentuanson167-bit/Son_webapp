@@ -20,7 +20,7 @@ export default function Hero() {
             <h1 className="font-display text-3xl sm:text-4xl lg:text-[3.5rem] font-extrabold leading-[1.1] tracking-tight text-on-surface mb-6">
               Doanh nghiệp Dược của bạn đang{" "}
               <span className="text-secondary-dim">mất hàng trăm giờ</span>{" "}
-              mỗi tháng cho quy trình GMP thủ công?
+              mỗi tháng cho các luồng công việc thủ công?
             </h1>
 
             <p className="text-base sm:text-lg text-on-surface-variant leading-relaxed max-w-xl mb-10">
@@ -64,7 +64,7 @@ export default function Hero() {
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-2">
                   <div className="h-3 w-3 rounded-full bg-tertiary" />
-                  <span className="text-xs font-semibold text-on-surface">GMP Compliance Dashboard</span>
+                  <span className="text-xs font-semibold text-on-surface">Bảng Dashboard hiệu suất</span>
                 </div>
                 <div className="flex gap-1.5">
                   <div className="h-2.5 w-2.5 rounded-full bg-slate-200" />
@@ -106,9 +106,9 @@ export default function Hero() {
                 {/* Mock task list */}
                 <div className="space-y-2">
                   {[
-                    { label: "Kiểm tra SOP-042 batch records", status: "done" },
-                    { label: "AI review deviation report #127", status: "progress" },
-                    { label: "Cập nhật CAPA hồ sơ thanh tra", status: "pending" },
+                    { label: "Soạn thảo, kiểm tra quy trình, quy định, kiểm tra hồ sơ lô tự động", status: "done" },
+                    { label: "Hàng trăm workflow tự động cho Doanh nghiệp Dược", status: "progress" },
+                    { label: "Xử lý hồ sơ khắc phục thanh tra, CAPA tự động", status: "pending" },
                   ].map((task, i) => (
                     <div key={i} className="flex items-center gap-3 rounded-[0.375rem] bg-surface px-3 py-2">
                       <div className={`h-2 w-2 rounded-full ${
