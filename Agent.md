@@ -127,3 +127,99 @@ Khi có nhiều phương án, chọn theo thứ tự:
 3. Phương án dễ thay thế/migrate khi scale.
 
 Nguyên tắc: Build nhỏ, đo lường sớm, tối ưu đúng điểm nghẽn thực tế.
+
+## 12) Firebase Setup & Deploy Checklist
+
+Các vấn đề đã gặp và cách xử lý khi setup Firebase + deploy Vercel cho project trong monorepo.
+
+### 12.1. Firebase Lazy Initialization (BẮT BUỘC)
+
+**Vấn đề:** `initializeApp()` + `getAuth()` / `getFirestore()` ở module level gây crash `auth/invalid-api-key` khi Next.js static generation (build time không có env vars).
+
+**Giải pháp:** Dùng lazy initialization pattern — KHÔNG export instance trực tiếp, export function getter:
+
+```typescript
+// ❌ SAI - crash khi build
+export const db = getFirestore(app);
+
+// ✅ ĐÚNG - lazy init
+let _db: Firestore | null = null;
+export function getDb(): Firestore {
+  if (!_db) _db = getFirestore(getFirebaseApp());
+  return _db;
+}
+```
+
+Tất cả service files (`services/*.ts`) phải gọi `const db = getDb()` bên trong mỗi function, KHÔNG dùng module-level `db`.
+
+### 12.2. Firebase CLI Login
+
+**Vấn đề:** `firebase login` không chạy được trong non-interactive terminal (Claude Code, CI/CD).
+
+**Giải pháp:**
+- Chạy `firebase login` trong terminal riêng (CMD/PowerShell/Git Bash) — lệnh này cần mở trình duyệt.
+- Cho CI/CD: dùng `firebase login:ci` để tạo token, rồi set `FIREBASE_TOKEN` env var.
+
+### 12.3. Firestore Rules & Seed Script
+
+**Vấn đề:** Seed script tạo user rồi ghi Firestore, nhưng rules yêu cầu role `admin` để write → chicken-and-egg problem. Thêm nữa, nếu user đã tồn tại (`auth/email-already-in-use`), script cũ không sign in lại → không authenticated → permission denied cho các writes tiếp theo.
+
+**Giải pháp:**
+1. Seed script phải import cả `signInWithEmailAndPassword` và xử lý case user đã tồn tại:
+   ```javascript
+   } catch (err) {
+     if (err.code === "auth/email-already-in-use") {
+       const cred = await signInWithEmailAndPassword(auth, email, password);
+       await setDoc(doc(db, "users", cred.user.uid), { ... }, { merge: true });
+     }
+   }
+   ```
+2. Tạm mở Firestore rules cho authenticated users write → chạy seed → restore rules bảo mật ngay sau đó.
+3. Luôn deploy rules lại sau khi seed xong.
+
+### 12.4. Vercel Monorepo Root Directory
+
+**Vấn đề:** Khi Git repo root (`Son_Webapp/`) khác với Next.js project folder (`ai-mind/`), Vercel build fail ngay lập tức (0s duration, "Unexpected error") vì không tìm thấy `package.json` ở root.
+
+**Giải pháp:**
+- Set **Root Directory** trong Vercel project settings = `ai-mind` (tên subfolder chứa Next.js project).
+- Có thể set qua Vercel Dashboard (Settings → General → Root Directory) hoặc API:
+  ```bash
+  curl -X PATCH "https://api.vercel.com/v9/projects/{projectId}?teamId={teamId}" \
+    -H "Authorization: Bearer {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"rootDirectory":"ai-mind"}'
+  ```
+- **Lưu ý:** Khi root directory đã set, CLI deploy (`vercel --prod`) phải chạy từ **repo root**, KHÔNG phải từ subfolder (sẽ bị lỗi path `ai-mind/ai-mind`). Nhưng git push auto-deploy hoạt động bình thường.
+
+### 12.5. Vercel Environment Variables
+
+**Vấn đề:** Firebase config là `NEXT_PUBLIC_*` nên Vercel cảnh báo visible to visitors — đây là bình thường cho Firebase client SDK (security nằm ở Firestore rules, không phải API key).
+
+**Quy trình thêm env vars:**
+```bash
+echo "value" | npx vercel env add NEXT_PUBLIC_FIREBASE_API_KEY production
+```
+Cần thêm 7 biến: `API_KEY`, `AUTH_DOMAIN`, `PROJECT_ID`, `STORAGE_BUCKET`, `MESSAGING_SENDER_ID`, `APP_ID`, `MEASUREMENT_ID`.
+
+### 12.6. Deploy Sequence Chuẩn
+
+Thứ tự deploy đúng khi setup project mới:
+
+1. Tạo Firebase project → Enable Firestore (asia-southeast1), Authentication (Email/Password), Storage.
+2. Lấy Firebase config → tạo `.env.local`.
+3. Cập nhật `.firebaserc` đúng project ID.
+4. `firebase login` (terminal riêng) → `firebase deploy --only firestore:rules,firestore:indexes,storage`.
+5. Tạm mở rules → `node scripts/seed-firestore.mjs` → restore rules → deploy rules lại.
+6. Thêm env vars vào Vercel → set Root Directory nếu monorepo → push code.
+
+### 12.7. `.gitignore` cho Firebase project
+
+Đảm bảo `.gitignore` có:
+```
+.env*
+!.env.local.example
+.vercel
+```
+- `.env.local` KHÔNG được commit (chứa API keys).
+- `.env.local.example` phải commit (template cho team members).

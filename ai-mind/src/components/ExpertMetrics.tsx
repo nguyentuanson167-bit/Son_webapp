@@ -56,7 +56,7 @@ export default function ExpertMetrics() {
             <div className="space-y-8">
               <div>
                 <div className="flex items-baseline gap-2 mb-2">
-                  <span className="font-display text-4xl font-extrabold text-secondary">70%</span>
+                  <span className="font-display text-5xl font-extrabold text-secondary">70%</span>
                 </div>
                 <p className="text-sm text-white/60 leading-relaxed">
                   Giảm thời gian chuẩn bị hồ sơ GMP tại các nhà máy đã triển khai
@@ -67,21 +67,10 @@ export default function ExpertMetrics() {
 
               <div>
                 <div className="flex items-baseline gap-2 mb-2">
-                  <span className="font-display text-4xl font-extrabold text-secondary">100%</span>
+                  <span className="font-display text-5xl font-extrabold text-secondary">100%</span>
                 </div>
                 <p className="text-sm text-white/60 leading-relaxed">
                   Các luồng công việc GMP được tự động hóa và số hóa theo chuẩn
-                </p>
-              </div>
-
-              <div className="h-px bg-white/10" />
-
-              <div>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="font-display text-4xl font-extrabold text-tertiary">Zero</span>
-                </div>
-                <p className="text-sm text-white/60 leading-relaxed">
-                  Không ghi nhận lỗi thao tác phổ biến trong mẫu nghiên cứu sau khi triển khai AI
                 </p>
               </div>
             </div>

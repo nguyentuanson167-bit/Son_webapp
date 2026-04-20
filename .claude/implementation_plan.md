@@ -1,62 +1,60 @@
-# Son Skool Implementation Plan (AI Runbook Edition)
+# AI MIND Implementation Plan (AI Runbook Edition)
 
 ## 1. Muc tieu
 
-Tai lieu nay huong dan trien khai he thong Son Skool theo PRD `PRD_Son_Skool.md`, tap trung vao:
+Tai lieu nay huong dan trien khai he thong AI MIND theo PRD `PRD_AI_Mind.md`, tap trung vao:
 
-- Ban khoa hoc online AI/Automation.
-- Quan ly don hang va cap quyen hoc.
-- Dieu huong hoc vien vao cong dong Skool.
-- Van hanh CMS de chinh gia, noi dung, SEO va tracking.
+- Website dich vu dao tao va tu van AI GMP/ISO cho nha may duoc.
+- Thu lead chat luong va dieu phoi discovery call / gap assessment.
+- Van hanh CMS de chinh noi dung, dich vu, du an, FAQ, SEO va tracking.
+- Xay dung nen tang cho AI pre-sales assistant va content operations.
 
 ## 2. Nguyen tac trien khai
 
 - Chia nho theo phase, moi phase co acceptance criteria ro rang.
-- Uu tien duong di ngan nhat de chot doanh thu (Landing -> Checkout -> Paid -> Access).
-- Moi thay doi lien quan gia, quyen hoc, thanh toan phai co log va test.
-- Tranh hard-code: noi dung web, gia, SEO, tracking lay tu CMS/Firestore.
+- Uu tien duong di ngan nhat de tao lead chat luong (Landing -> CTA -> Form/Booking -> Qualified lead).
+- Moi thay doi lien quan claim, chi so case study, FAQ compliance phai co log va co nguoi duyet.
+- Tranh hard-code: noi dung web, dich vu, FAQ, SEO, tracking lay tu CMS/Firestore.
 
 ## 3. Scope theo PRD
 
 ### In-scope
 
-- Landing page + lead form.
-- Checkout + tao `orders`.
-- Quan ly `courses` trong CMS.
-- Cap quyen hoc + gui huong dan vao Skool.
-- Dashboard co funnel co ban va tracking nguon traffic.
-- Knowledge base + AI sales chatbot ban dau.
-- Quan ly SEO config.
+- Landing page + lead form + booking flow.
+- Quan ly `services`, `training_programs`, `standards_pages`, `projects` trong CMS.
+- Dashboard co funnel lead co ban va tracking nguon traffic.
+- Knowledge base + AI pre-sales assistant ban dau.
+- Quan ly SEO config, FAQ va content pages.
 
 ### Out-of-scope cho MVP
 
-- Learning player phuc tap nhu LMS day du.
-- He thong affiliate day du.
+- Cong cu danh gia compliance chuyen sau thay the audit chinh thuc.
+- Tich hop ERP/MES/LIMS phuc tap trong MVP website.
 - Automation email da kenh phuc tap (co the them o phase sau).
 
 ## 4. Ke hoach theo phase
 
-## Phase 1 - MVP Revenue Flow
+## Phase 1 - MVP Lead Engine
 
 ### Muc tieu
 
-Kich hoat duoc luong co doanh thu dau tien: user vao landing, dang ky/mua khoa hoc, he thong luu don va admin theo doi duoc.
+Kich hoat duoc luong lead dau tien: user vao landing, gui yeu cau tu van/dat lich, he thong luu lead va admin theo doi duoc.
 
 ### Cong viec chinh
 
-1. Landing + Form dang ky
-- Tao section Hero, Benefits, Curriculum, Testimonials, CTA.
-- Form thu thap: ho ten, so dien thoai, email, muc tieu hoc.
+1. Landing + Form tu van
+- Tao section Hero, Pain Points, 3 Pillars, Service Cards, 4 Buoc Chuyen Doi, Expert Proof, FAQ, CTA.
+- Form thu thap: ho ten, chuc danh, cong ty, so dien thoai, email, muc tieu, tieu chuan quan tam.
 - Luu lead vao `leads`.
 
-2. Checkout + Don hang
-- Tao checkout flow cho 1 hoac nhieu khoa hoc.
-- Luu `orders` voi `payment_status = pending`.
-- Ho tro coupon co ban (neu co san trong scope sprint).
+2. Consultation request + Booking
+- Tao flow gui yeu cau tu van.
+- Luu `consultation_requests` voi `status = new`.
+- Neu co lich hen tu dong, tao `assessment_bookings` ban dau.
 
-3. Catalog khoa hoc public
-- Render danh sach tu `courses` (chi lay `is_published = true`).
-- Hien gia goc, gia sale, cap do, mo ta ngan.
+3. Dich vu va page public
+- Render danh sach dich vu tu `services` (chi lay `is_published = true`).
+- Render trang tong hop `Giải pháp`, `Lĩnh vực GMP`, `ISO Standards`, `Dự án`.
 
 4. Admin login + khung CMS co ban
 - Admin route rieng, khong public tren menu client.
@@ -65,60 +63,59 @@ Kich hoat duoc luong co doanh thu dau tien: user vao landing, dang ky/mua khoa h
 ### Acceptance criteria
 
 - Tao duoc lead moi va xem duoc tren Firestore.
-- Tao duoc order moi voi day du thong tin thanh toan.
-- Danh sach khoa hoc tren frontend lay du lieu dong tu Firestore.
-- Admin vao duoc dashboard va xem duoc danh sach order.
+- Tao duoc consultation request voi day du thong tin B2B.
+- Danh sach dich vu tren frontend lay du lieu dong tu Firestore.
+- Admin vao duoc dashboard va xem duoc danh sach lead / booking.
 
-## Phase 2 - Core CMS and Access Control
+## Phase 2 - Core CMS and Trust Building
 
 ### Muc tieu
 
-Hoan thien bo may van hanh: quan ly khoa hoc, cap quyen hoc, tracking doanh thu va funnel.
+Hoan thien bo may van hanh: quan ly noi dung dich vu, standards pages, case study, FAQ, tracking funnel va lead ownership.
 
 ### Cong viec chinh
 
-1. Courses module (CMS)
-- CRUD `courses`: title, slug, level, pricing, publish status, skool_group_url.
-- Validate du lieu gia va trang thai khoa hoc.
+1. Services + Training module (CMS)
+- CRUD `services`, `training_programs`.
+- Validate CTA, standards_supported, outcomes, publish status.
 
-2. Orders module (CMS)
-- Bang order co filter theo `payment_status`, `access_status`, `utm_source`.
-- Update trang thai thanh toan.
-- Nut cap lai quyen hoc/thu moi vao Skool.
+2. Standards + Projects module (CMS)
+- CRUD `standards_pages`, `projects`.
+- Giu duoc lien ket giua pain point, standards, service va case study.
 
-3. Student profile
-- Upsert `students` sau khi order paid.
-- Luu `enrolled_courses`, `skool_profile_url`, `tags`.
+3. Lead pipeline module
+- Bang lead co filter theo `status`, `service_interest`, `utm_source`.
+- Gan owner, ghi note, cap nhat next action.
 
-4. Access flow sau thanh toan
-- Khi `payment_status = paid`: set `access_status = granted`.
-- Danh dau `skool_invite_sent` sau khi gui huong dan.
+4. FAQ + Content pages
+- CRUD `faq_items`, `pages`.
+- Chu dong update noi dung hero, process, CTA, section order.
 
 5. Tracking va SEO
 - Quan ly `seo_configs` trong CMS.
-- Luu UTM theo order, hien funnel co ban tren dashboard.
+- Luu UTM theo lead, hien funnel co ban tren dashboard.
 
 ### Acceptance criteria
 
-- Admin tao/sua/xoa khoa hoc khong loi.
-- Order da thanh toan duoc cap quyen hoc trong luong xu ly.
-- Co the loc va theo doi order theo trang thai.
+- Admin tao/sua/xoa dich vu, training, standards, project khong loi.
+- Lead duoc cap nhat trang thai va ghi chu trong luong xu ly.
+- Co the loc va theo doi lead theo trang thai.
 - SEO config cap nhat len website dung.
 
 ## Phase 3 - Scale and AI Experience
 
 ### Muc tieu
 
-Tang ti le chot don va nang hieu qua van hanh qua AI va noi dung dong.
+Tang ti le dat lich, tang chat luong lead va nang hieu qua van hanh qua AI va noi dung dong.
 
 ### Cong viec chinh
 
 1. Knowledge Base manager
 - CRUD `knowledge_base`.
-- Taxonomy tags: pricing, curriculum, support, skool.
+- Taxonomy tags: gmp, iso, training, pricing, automation, security.
 
-2. AI Sales Chatbot
-- Query context tu `knowledge_base` + `courses`.
+2. AI Pre-sales Assistant
+- Query context tu `knowledge_base` + `services` + `standards_pages`.
 - Tra loi trong pham vi du lieu duoc duyet.
 - Fallback: moi de lai thong tin de tu van vien lien he.
 
@@ -127,7 +124,7 @@ Tang ti le chot don va nang hieu qua van hanh qua AI va noi dung dong.
 - Ho tro rollback noi dung co ban.
 
 4. Content assistant
-- Goi AI de goi y CTA, mo ta khoa hoc, FAQ, email follow-up.
+- Goi AI de goi y CTA, mo ta dich vu, FAQ, email follow-up, dan y blog.
 
 ### Acceptance criteria
 
@@ -142,11 +139,11 @@ Tang ti le chot don va nang hieu qua van hanh qua AI va noi dung dong.
 - Tach quyen public/admin/service account.
 
 2. Audit log
-- Ghi log thay doi gia khoa hoc, cap quyen, hoan tien.
+- Ghi log thay doi claim, FAQ, case metrics, CTA, trang thai lead.
 
 3. Test strategy
-- Unit test cho service quan trong: orders, access, courses.
-- Integration test cho flow Checkout -> Paid -> Granted.
+- Unit test cho service quan trong: leads, bookings, services, content.
+- Integration test cho flow Landing -> Form/Booking -> CRM update.
 - UAT checklist cho admin dashboard.
 
 4. Deployment
@@ -156,13 +153,13 @@ Tang ti le chot don va nang hieu qua van hanh qua AI va noi dung dong.
 
 ## 6. KPI va gate truoc go-live
 
-- Landing -> Paid >= 2.5%.
-- Payment success >= 85%.
-- Grant access trong 5 phut >= 95%.
-- Ty le vao Skool sau thanh toan >= 70%.
-- Lead duoc cham soc trong 24h >= 90%.
+- Landing -> Form/Booking >= 3.5%.
+- CTA click rate >= 6%.
+- Lead duoc cham soc trong 2 gio lam viec >= 90%.
+- Consultation request -> Booked call >= 25%.
+- Qualified lead -> Proposal >= 35%.
 
-Neu chua dat gate, uu tien sua flow thanh toan va onboarding truoc khi mo rong tinh nang.
+Neu chua dat gate, uu tien sua flow CTA, form, booking va follow-up truoc khi mo rong tinh nang.
 
 ## 7. Checklist ban giao moi phase
 

@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p /tmp/stitch_design)",
+      "Read(//tmp/**)",
+      "Bash(unzip -o \"c:/Users/nguye/Desktop/stitch_ai_mind_pharma_solution.zip\")",
+      "Bash(npx create-next-app@latest ai-mind --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --use-npm --no-turbopack)",
+      "Bash(npm run:*)",
+      "Bash(npm install:*)",
+      "Bash(npx firebase:*)",
+      "Bash(firebase --version)",
+      "Bash(npm list:*)",
+      "Bash(npx vercel:*)",
+      "Bash(vercel whoami:*)",
+      "Bash(vercel --yes --prod)",
+      "Bash(firebase:*)",
+      "Bash(node scripts/seed-firestore.mjs)",
+      "Bash(node -e \"const p = require\\(''./package.json''\\); console.log\\(''node engine:'', p.engines\\); console.log\\(''next:'', p.dependencies.next\\)\")",
+      "Read(//e/00. Son_Mind/Son_Webapp/ai-mind/$LOCALAPPDATA/**)",
+      "Read(//e/00. Son_Mind/Son_Webapp/ai-mind/$HOME/.config/**)",
+      "Read(//e/00. Son_Mind/Son_Webapp/ai-mind/$APPDATA/**)",
+      "Read(//e/00. Son_Mind/Son_Webapp/ai-mind/$HOME/.local/share/**)",
+      "Read(//c/Users/nguye/AppData/Roaming/com.vercel.cli/**)",
+      "Read(//c/Users/nguye/AppData/Local/com.vercel.cli/Data/**)",
+      "Read(//c/Users/nguye/AppData/Local/com.vercel.cli/**)",
+      "Bash(curl -s -X PATCH \"https://api.vercel.com/v9/projects/prj_krD9p8bStLGgOwEjvfth13UHnDYq?teamId=team_bkyUQxzu4hAA5K0wdLW477gA\" -H \"Authorization: Bearer vca_10Rt5Be2C7hwBuXPmh7EeDTXc3kqfYRPbGq4R5df0PPLqmDm1h22c0oj\" -H \"Content-Type: application/json\" -d '{\"\"\"\"rootDirectory\"\"\"\":\"\"\"\"ai-mind\"\"\"\"}')",
+      "Bash(python -m json.tool)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
+    ]
+  }
+}

@@ -5,10 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 
 const navItems = [
-  { label: "Giải pháp", href: "#solutions" },
-  { label: "Lĩnh vực GMP", href: "#gmp" },
-  { label: "ISO Standards", href: "#iso" },
-  { label: "Dự án", href: "#projects" },
+  { label: "Giải pháp", href: "/giai-phap" },
+  { label: "Lĩnh vực GMP", href: "/linh-vuc-gmp" },
+  { label: "Lĩnh vực ISO", href: "/linh-vuc-iso" },
+  { label: "AI Automation", href: "/ai-automation" },
 ];
 
 export default function Header() {
